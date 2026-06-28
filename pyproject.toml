@@ -1,0 +1,17 @@
+[project]
+name = "meeting-minutes-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "accelerate>=1.14.0",
+    "gradio>=6.19.0",
+    "openai-whisper>=20250625",
+    "python-docx>=1.2.0",
+    "reportlab>=5.0.0",
+    "sentencepiece>=0.2.1",
+    "soundfile>=0.14.0",
+    "torch>=2.12.1",
+    "transformers>=5.12.1",
+]
