@@ -1,6 +1,10 @@
 import torch
 
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import (
+    AutoTokenizer,
+    AutoModelForCausalLM,
+    BitsAndBytesConfig,
+)
 
 from utils.config import (
     LLM_MODEL_NAME,
@@ -14,6 +18,13 @@ from prompts.prompts import MEETING_MINUTES_SYSTEM_PROMPT
 tokenizer = None
 model = None
 
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.float16,
+    bnb_4bit_use_double_quant=True,
+)
+
 
 def load_llm():
 
@@ -21,9 +32,14 @@ def load_llm():
 
     if tokenizer is None:
         tokenizer = AutoTokenizer.from_pretrained(LLM_MODEL_NAME)
+        
+        if tokenizer.pad_token is None:
+            tokenizer.pad_token = tokenizer.eos_token
 
     if model is None:
-        model = AutoModelForCausalLM.from_pretrained(LLM_MODEL_NAME, device_map="auto")
+        model = AutoModelForCausalLM.from_pretrained(
+            LLM_MODEL_NAME, device_map="auto", quantization_config=bnb_config
+        )
 
         model.eval()
 

@@ -95,6 +95,12 @@ Meeting-Minutes-AI/
 
 ---
 
+## Optimization
+
+- Implemented 4-bit quantization using BitsAndBytes (NF4) to reduce GPU memory usage while maintaining high-quality meeting minute generation.
+
+---
+
 ## 👨‍💻 Author
 
 **Viresh Hiremath**
